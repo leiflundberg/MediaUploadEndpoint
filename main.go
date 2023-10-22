@@ -23,14 +23,16 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("File Size: %+v\n", handler.Size)
 	fmt.Printf("MIME Header: %+v\n", handler.Header)
 	extension := filename[strings.LastIndex(filename, ".")+1:]
-	fmt.Println("Extension: " + extension)
+	fmt.Println("Extension: ." + extension)
 	tempFile, err := os.CreateTemp("uploads", "upload-*."+extension)
 	if err != nil {
+		fmt.Println("Permission denied here? inside CreateTemp")
 		fmt.Println(err)
 	}
 	defer tempFile.Close()
 	fileBytes, err := io.ReadAll(file)
 	if err != nil {
+		fmt.Println("Permission denied here? inside ReadAll")
 		fmt.Println(err)
 	}
 	tempFile.Write(fileBytes)
